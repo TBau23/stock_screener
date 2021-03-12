@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="ui input focus">
+    <input type="text" placeholder="Filter P/E">
+  </div>
+  <div class="ui input focus">
+    <input type="text" placeholder="Filter Dividend Yield">
+  </div>
+
+  
+<table class="ui celled table">
+    <thead>
+      <tr><th>Symbol</th>
+      <th>P/E</th>
+      <th>Dividend Yield</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td data-label="Name">MSFT</td>
+        <td data-label="Age">10</td>
+        <td data-label="Job">2</td>
+      </tr>
+      <tr>
+        <td data-label="Name">Jill</td>
+        <td data-label="Age">26</td>
+        <td data-label="Job">Engineer</td>
+      </tr>
+      <tr>
+        <td data-label="Name">Elyse</td>
+        <td data-label="Age">24</td>
+        <td data-label="Job">Designer</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
