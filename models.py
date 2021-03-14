@@ -1,6 +1,4 @@
 from sqlalchemy import Column, String, Numeric, Integer
-
-
 from database import Base
 
 class Stock(Base):
