@@ -25,7 +25,7 @@ def get_db(): # all endpoints that use database need reference to this function 
         db.close()
 
 @app.get("/")
-def dashboard(request : Request):
+def dashboard(request : Request, db: Session = Depends(get_db)):
     """
     displays stock screener dashboard
     """
@@ -55,7 +55,7 @@ def fetch_stock_data(id: int):
     db.commit()
 
 @app.post("/stock")
-async def create_stock(stock_request : StockRequest, background_tasks: BackgroundTasks ,db: Session = Depends(get_db)): # depends must be at end
+async def create_stock(stock_request : StockRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)): # depends must be at end
     """
     creates stock and stores it in database
     """
@@ -64,7 +64,7 @@ async def create_stock(stock_request : StockRequest, background_tasks: Backgroun
     db.add(stock)
     db.commit()
 
-    background_tasks.add_task(fetch_stock_data, stock.id)
+    background_tasks.add_task(fetch_stock_data, stock.id) 
 
 
     return {

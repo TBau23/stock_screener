@@ -1,12 +1,43 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script>
+  $(document).ready(function() {
+    $('#add_stocks').click(function() {
+      $('.ui.modal')
+      .modal('show');
+    })
+
+    $('#save').click(function() {
+       const symbols = $('#symbols').val();
+       const symbolsArr = symbols.split('\n');
+       for(let i = 0; i < symbolsArr.length; i++) {
+         
+         $.ajax({
+           url: "/stock",
+           type: "POST",
+           contentType: "application/json",
+           data: JSON.stringify({"symbol": symbolsArr[i]}),
+           dataType: 'json'
+         })
+       }
+       
+      $('.ui.modal')
+      .modal('hide');
+    })
+  })
+</script>
+
 <div class="ui input focus">
     <input type="text" placeholder="Filter P/E">
   </div>
   <div class="ui input focus">
     <input type="text" placeholder="Filter Dividend Yield">
   </div>
+
+  <button id="add_stocks" class="ui button">
+    Add Stocks
+  </button>
 
   
 <table class="ui celled table">
@@ -18,19 +49,31 @@
     <tbody>
       <tr>
         <td data-label="Name">MSFT</td>
-        <td data-label="Age">10</td>
-        <td data-label="Job">2</td>
-      </tr>
-      <tr>
-        <td data-label="Name">Jill</td>
-        <td data-label="Age">26</td>
-        <td data-label="Job">Engineer</td>
-      </tr>
-      <tr>
-        <td data-label="Name">Elyse</td>
-        <td data-label="Age">24</td>
-        <td data-label="Job">Designer</td>
+        <td data-label="P/E">10</td>
+        <td data-label="Dividend Yield">2</td>
       </tr>
     </tbody>
   </table>
+
+  <div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+      Add Stock Symbol
+    </div> 
+    <div class="content">
+      <div class="ui form">
+        <div class="field">
+          <label>Enter Stock Symbols. Use a new line for each symbol.</label>
+          <textarea id="symbols"></textarea>
+        </div>
+        
+      </div>
+    </div>
+    <div class="actions">
+      <div class="ui positive right labeled icon button" id="save">
+        Add Symbols to Screener
+        <i class="plus icon"></i>
+      </div>
+    </div>
+  </div>
 {% endblock %}
