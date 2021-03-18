@@ -29,8 +29,12 @@ def dashboard(request : Request, db: Session = Depends(get_db)):
     """
     displays stock screener dashboard
     """
+    stocks = db.query(Stock).all()
+    
+
     return templates.TemplateResponse("dashboard.html", {
-        "request" : request
+        "request" : request,
+        "stocks" : stocks
     } )
 
 # run server with uvicorn main:app --reload

@@ -43,15 +43,26 @@
 <table class="ui celled table">
     <thead>
       <tr><th>Symbol</th>
-      <th>P/E</th>
+      <th>Price</th>
+      <th>Forward P/E</th>
+      <th>Forward EPS</th>
       <th>Dividend Yield</th>
+      <th>50 Day</th>
+      <th>200 Day</th>
+      
     </tr></thead>
     <tbody>
+      {% for stock in stocks %}
       <tr>
-        <td data-label="Name">MSFT</td>
-        <td data-label="P/E">10</td>
-        <td data-label="Dividend Yield">2</td>
+        <td>{{ stock.symbol }}</td>
+        <td>{{ stock.price }}</td>
+        <td>{{ stock.forward_pe }}</td>
+        <td>{{ stock.forward_eps }}</td>
+        <td>{{ stock.dividend_yield }}</td>
+        <td>{{ stock.ma50 }}</td>
+        <td>{{ stock.ma200 }}</td>
       </tr>
+      {% endfor %}
     </tbody>
   </table>
 
