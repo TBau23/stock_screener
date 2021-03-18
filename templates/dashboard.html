@@ -28,16 +28,31 @@
   })
 </script>
 
-<div class="ui input focus">
-    <input type="text" placeholder="Filter P/E">
-  </div>
+<form>
   <div class="ui input focus">
-    <input type="text" placeholder="Filter Dividend Yield">
-  </div>
+    
+      <input type="text" name='forward_pe' placeholder="Filter P/E less than..." {% if forward_pe %}value="{{ forward_pe }}"{% endif %}>
+    </div>
+    <div class="ui input focus">
+      <input type="text" name='dividend_yield' placeholder="Div Yield greater than..." {% if dividend_yield %}value="{{ dividend_yield }}"{% endif %}>
+    </div>
 
-  <button id="add_stocks" class="ui button">
-    Add Stocks
-  </button>
+    <div class="ui slider checkbox">
+      <input type="checkbox" name="ma50" {% if ma50 %} checked="checked"{% endif %} > 
+      <label>Above 50 Day MA</label>
+    </div>
+
+    <div class="ui slider checkbox">
+      <input type="checkbox" name="ma200" {% if ma200 %} checked="checked"{% endif %}>
+      <label>Above 200 Day MA</label>
+    </div>
+
+    <button type='submit' style="margin-left: 8; margin-right: 8;" class="ui button primary">Filter</button>
+
+    <button id="add_stocks" class="ui button">
+      Add Stocks
+    </button>
+</form>
 
   
 <table class="ui celled table">

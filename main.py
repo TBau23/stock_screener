@@ -25,17 +25,33 @@ def get_db(): # all endpoints that use database need reference to this function 
         db.close()
 
 @app.get("/")
-def dashboard(request : Request, db: Session = Depends(get_db)):
+def dashboard(request : Request, forward_pe = None, dividend_yield = None, ma50 = None, ma200 = None, db: Session = Depends(get_db)):
     """
     displays stock screener dashboard
     """
-    stocks = db.query(Stock).all()
+    stocks = db.query(Stock)
     
+    if forward_pe:
+        stocks = stocks.filter(Stock.forward_pe < forward_pe)
+
+    if dividend_yield:
+        stocks = stocks.filter(Stock.dividend_yield > dividend_yield)
+
+    if ma50:
+        stocks = stocks.filter(Stock.price > Stock.ma50)
+    
+    if ma200:
+        stocks = stocks.filter(Stock.price > Stock.ma200)
 
     return templates.TemplateResponse("dashboard.html", {
         "request" : request,
-        "stocks" : stocks
-    } )
+        "stocks" : stocks,
+        "dividend_yield" : dividend_yield,
+        "forward_pe" : forward_pe,
+        "ma50" : ma50,
+        "ma200" : ma200
+
+    })
 
 # run server with uvicorn main:app --reload
 
